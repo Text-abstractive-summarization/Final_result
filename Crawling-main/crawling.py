@@ -317,7 +317,6 @@ class Crawling(Topic):
 
     def make_df(self, topic):
         
-        global url
         if topic == '경제':
             url = 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101'
         elif topic == '정치':
@@ -371,4 +370,16 @@ class Crawling(Topic):
         final_df = pd.DataFrame({'time':[time],'media':[media],'title':[title],'document':[text]})
         final_df.document = final_df.document.apply(lambda x: re.sub('\n','',x))
         final_df.document = final_df.document.apply(lambda x: re.sub('\t','',x))
+        return final_df
+
+    def timer(self):
+        final_df = pd.DataFrame()
+        for topic in ["경제", "정치", "사회", "생활/문화","스포츠"]:
+            df = self.make_df(topic)
+            df['topic'] = topic
+            df.document = df.document.apply(lambda x: re.sub('\n','',x))
+            df.document = df.document.apply(lambda x: re.sub('\t','',x))
+
+            final_df= pd.concat([final_df, df], ignore_index=True)
+
         return final_df
