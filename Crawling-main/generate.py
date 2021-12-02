@@ -7,6 +7,7 @@ class Generate:
         self.tokenizer = T5Tokenizer.from_pretrained(model_url)
 
     def generate_text(self, text):
+        text = 'summarize :'+text
         ids = self.tokenizer.encode(text, return_tensors='pt')
         generate = self.model.generate(ids)
         return self.tokenizer.decode(generate[0])
