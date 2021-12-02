@@ -4,12 +4,15 @@ import pandas as pd
 import re
 import numpy as np
 from datetime import datetime
+from generate import Generate
+
 
 
 
 class Topic:
     def __init__(self):
         self.headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36"}
+        self.generate = Generate(model_url)
 
     def main_page(self, url,topic):
         # 모듈 import
@@ -54,7 +57,7 @@ class Topic:
             np_list = page.select('span.writing')
             counter = {}
             for np_name in np_list:
-                if np_name.text in ['조선일보', '동아일보', '경향신문', '한겨레', '한국일보', '중앙일보']:
+                if np_name.text in ['조선일보', '중앙일보', '경향신문', '한겨레', '한국일보', '동아일보']:
                     if np_name.text not in counter:
                         counter[np_name.text] = 0
                     counter[np_name.text] += 1
@@ -70,16 +73,16 @@ class Topic:
 
         global con
         global pro
-        con = ['조선일보', '동아일보']
+        con = ['조선일보', '중앙일보']
         pro = ['경향신문', '한겨레']
         
 
         for name in con+pro:
             df3[f'{name}_presence'] = df3[f'{name}'].apply(lambda x :1 if x>0 else 0)
-        df3['보수'] = df3['조선일보_presence'] + df3['동아일보_presence'] # 보수신문 2개 있는지
+        df3['보수'] = df3['조선일보_presence'] + df3['중앙일보_presence'] # 보수신문 2개 있는지
         df3['진보'] = df3['경향신문_presence'] + df3['한겨레_presence'] # 진보신문 2개 있는지
         df3['합계'] = df3['보수'] + df3['진보']
-        df3 = df3.drop(['조선일보_presence','동아일보_presence','경향신문_presence','한겨레_presence'], axis=1)
+        df3 = df3.drop(['조선일보_presence','중앙일보_presence','경향신문_presence','한겨레_presence'], axis=1)
         
         return df3
 
@@ -126,7 +129,7 @@ class Topic:
                 new_con = con
             else:
                 new_pro = pro
-                new_con = list(set(con) - {absent_name}) + ['중앙일보']
+                new_con = list(set(con) - {absent_name}) + ['동아일보']
             print('선택한 언론사', new_pro + new_con)
 
         # 보수, 진보 각각 1개 있는 df - 관련기사 가장 많은 헤드라인의 링크
@@ -140,7 +143,7 @@ class Topic:
 
             # 보수, 진보 각각 1개씩 있을 때 선택할 언론사
             new_pro = list(set(pro) - {absent_name_pro}) + ['한국일보']
-            new_con = list(set(con) - {absent_name_con}) + ['중앙일보']
+            new_con = list(set(con) - {absent_name_con}) + ['동아일보']
             print('선택한 언론사', new_pro + new_con)
 
         return selected_url
@@ -350,6 +353,8 @@ class Crawling(Topic):
             final_df = pd.DataFrame({'time':time,'media':media,'title':head,'document':body})
             final_df.document = final_df.document.apply(lambda x: re.sub('\n','',x))
             final_df.document = final_df.document.apply(lambda x: re.sub('\t','',x))
+        final_df = self.generate.input_generate(final_df, 'document')
+
         return final_df
 
 
@@ -361,6 +366,8 @@ class Crawling(Topic):
             final_df = pd.DataFrame({'time':[time],'media':[media_name],'title':[title],'document':[text]})
             final_df.document = final_df.document.apply(lambda x: re.sub('\n','',x))
             final_df.document = final_df.document.apply(lambda x: re.sub('\t','',x))
+            final_df = self.generate.input_generate(final_df, 'document')
+
             return final_df
         else:
             return None
@@ -370,6 +377,8 @@ class Crawling(Topic):
         final_df = pd.DataFrame({'time':[time],'media':[media],'title':[title],'document':[text]})
         final_df.document = final_df.document.apply(lambda x: re.sub('\n','',x))
         final_df.document = final_df.document.apply(lambda x: re.sub('\t','',x))
+        final_df = self.generate.input_generate(final_df, 'document')
+
         return final_df
 
     def timer(self):
@@ -381,5 +390,5 @@ class Crawling(Topic):
             df.document = df.document.apply(lambda x: re.sub('\t','',x))
 
             final_df= pd.concat([final_df, df], ignore_index=True)
-
+        final_df = self.generate.input_generate(final_df, 'document')
         return final_df
