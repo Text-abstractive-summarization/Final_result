@@ -10,7 +10,7 @@ class Generate:
         text = 'summarize :'+text
         ids = self.tokenizer.encode(text, return_tensors='pt')
         generate = self.model.generate(ids)
-        return self.tokenizer.decode(generate[0])
+        return self.tokenizer.decode(generate[0],skip_special_tokens=True, clean_up_tokenization_spaces=True)
 
     def input_generate(self, df, column):
         dataframe = df.copy()
