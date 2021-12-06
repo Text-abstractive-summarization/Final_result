@@ -10,7 +10,8 @@ from generate import Generate
 
 
 class Topic:
-    def __init__(self, model_url):
+    def __init__(self):
+        model_url = './etri_et5'
         self.headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36"}
         self.generate = Generate(model_url)
 
@@ -315,8 +316,8 @@ class Topic:
 
 
 class Crawling(Topic):
-    def __init__(self,model_url):
-        super().__init__(model_url = model_url)
+    def __init__(self):
+        super().__init__()
 
     def make_df(self, topic):
         
