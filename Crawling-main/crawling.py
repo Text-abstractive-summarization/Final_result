@@ -240,7 +240,6 @@ class Topic:
             
         elif re.search('https://entertain.naver.com/',req.url):
             time, media_name, title, text = self.entertain_contents(url)
-            print (1)
         
         else:
             try:
