@@ -26,5 +26,5 @@ class Generate:
 
     def input_generate(self, df, column):
         dataframe = df.copy()
-        dataframe['generated_text'] = dataframe['document'].apply(lambda x: self.generate_text(x))
+        dataframe['generate_text'] = dataframe['document'].apply(lambda x: self.generate_text(x))
         return dataframe
