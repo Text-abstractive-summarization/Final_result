@@ -11,12 +11,10 @@ class Generate:
 
     def generate_text(self, text):
         text = 'summarize :'+text
-        data = self.tokenizer.encode_plus(text, return_tensors='pt')
-        ids = data['input_ids'].to(self.device,dtype=torch.long)
-        mask = data['attention_mask'].to(self.device,dtype=torch.long)
+        ids = self.tokenizer.encode(text, return_tensors='pt').to(self.device,dtype=torch.long)
         
-        generate = self.model.generate(input_ids = ids,
-                attention_mask = mask, 
+        generate = self.model.generate(
+                input_ids = ids,
                 max_length=150, 
                 num_beams=2,
                 repetition_penalty=2.5, 
