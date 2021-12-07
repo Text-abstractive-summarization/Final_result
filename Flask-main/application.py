@@ -11,26 +11,6 @@ application = Flask(__name__)
 def hello():
     return "서버 실행중"
 
-@application.route("/menu", methods=['POST'])
-def menu():
-
-    # 답변 텍스트 설정
-    res = {
-        "version": "2.0",
-        "template": {
-            "outputs": [
-                {
-                    "simpleText": {
-                        "text": "메뉴 목록입니다.\n정치\n사회\n경제\n생활/문화\n스포츠\n검색\n링크"
-                    }
-                }
-            ]
-        }
-    }
-
-    # 답변 전송
-    return jsonify(res)
-
 @application.route("/politics", methods=['POST'])
 def politics():
     pol = crawl.make_df('정치') #정치 부문 크롤링
