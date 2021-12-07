@@ -10,18 +10,19 @@ class Generate:
         self.model.to(device)
 
     def generate_text(self, text):
-        text = 'summarize :'+text
-        ids = self.tokenizer.encode(text, return_tensors='pt').to(self.device,dtype=torch.long)
-        
-        generate = self.model.generate(
-                input_ids = ids,
-                max_length=150, 
-                num_beams=2,
-                repetition_penalty=2.5, 
-                length_penalty=1.0, 
-                early_stopping=True)
-
-        return self.tokenizer.decode(generate[0],skip_special_tokens=True, clean_up_tokenization_spaces=True)
+        with torch.no_grad():
+            text = 'summarize :'+text
+            ids = self.tokenizer.encode(text, return_tensors='pt').to(self.device,dtype=torch.long)
+            
+            generate = self.model.generate(
+                    input_ids = ids,
+                    max_length=150, 
+                    num_beams=2,
+                    repetition_penalty=2.5, 
+                    length_penalty=1.0, 
+                    early_stopping=True)
+            gen = self.tokenizer.decode(generate[0],skip_special_tokens=True, clean_up_tokenization_spaces=True)
+        return gen 
 
     def input_generate(self, df, column):
         dataframe = df.copy()
