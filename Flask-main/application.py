@@ -9,6 +9,8 @@ crawl = Crawling()
 
 asa = schedule.every().day.at("8:50").do(crawl.timer())# 아침마다 보낼거
 
+total = schedule.every().hour.at(":30").do(crawl.timer()) #30분마다 요약할거 뽑아옴
+
 application = Flask(__name__)
 
 @application.route("/")
@@ -17,7 +19,7 @@ def hello():
 
 @application.route("/politics", methods=['POST'])
 def politics():
-    pol = crawl.make_df('정치')
+    pol = total.loc[total['topic'] == '정치']
     if len(pol) == 4:
         res = {
             "version": "2.0",
@@ -97,7 +99,7 @@ def economy():
 
 @application.route("/society", methods=['POST'])
 def society():
-    soc = crawl.make_df('사회')
+    soc = total.loc[total['topic'] == '사회']
     if len(soc) == 4:
             
         res = {
@@ -136,7 +138,7 @@ def society():
 
 @application.route("/culture", methods=['POST'])
 def living():
-    liv = crawl.make_df('생활/문화')
+    liv = total.loc[total['topic'] == '생활/문화']
     if len(liv) == 4:
         res = {
             "version": "2.0",
@@ -176,7 +178,7 @@ def living():
 
 @application.route("/sports", methods=['POST'])
 def sport():
-    spo = crawl.make_df('스포츠')
+    spo = total.loc[total['topic'] == '스포츠']
     if len(spo) == 4:
         res = {
             "version": "2.0",
