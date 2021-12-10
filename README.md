@@ -36,6 +36,6 @@
 ![image](https://user-images.githubusercontent.com/86218931/145513998-31dfca55-f752-4d5d-bfff-bec50a5c36be.png)
 
 #### 5. 서비스 배포
-- 포털에서 뉴스기사를 크롤링하고 Fine-tuning으로 구축한 모델을 통해 요약문을 생성한 뒤 kakao i open builder를 이용하여 사용자에게 챗봇으로 뉴스 기사 요약문 서비스 배포함
+- 포털에서 뉴스기사를 크롤링하고 Fine-tuning으로 구축한 모델을 통해 요약문을 생성한 뒤 kakao i open builder를 이용하여 사용자에게 챗봇으로 뉴스 기사 요약문 서비스를 배포함
 
 ![image](https://user-images.githubusercontent.com/86218931/145514090-89c30bce-dd47-4457-a431-29f83e12e908.png)
