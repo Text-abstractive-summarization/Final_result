@@ -1,10 +1,11 @@
 # AI 기반 데일리 뉴스 요약 챗봇 서비스 
 ### 참조 폴더
 - Crawling-main: N사 포털의 뉴스 기사를 크롤링하는 코드입니다.
+- Explanation_about_code: T5 fine-tuning에 대한 설명 주석이 담겨있는 코드입니다.
 - Flask-main: API의 기반이 되는 Flask 코드입니다.
 - NLP-model-main-scoring: bert score를 측정하는 코드입니다.
 - model_ET5: 최종 모델(epoch:12, data:290,000건)의 학습 과정이 담긴 코드 폴더입니다.
-- Explanation_about_code: T5 fine-tuning에 대한 설명 주석이 담겨있는 코드입니다.
+
 
 
 
