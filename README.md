@@ -48,3 +48,11 @@
 - 포털에서 뉴스기사를 크롤링하고 Fine-tuning으로 구축한 모델을 통해 요약문을 생성한 뒤 kakao i open builder를 이용하여 사용자에게 챗봇으로 뉴스 기사 요약문 서비스를 배포함
 
 ![image](https://user-images.githubusercontent.com/86218931/145514090-89c30bce-dd47-4457-a431-29f83e12e908.png)
+
+
+#### 6. 서비스 구동 시 필수 요소
+1) kakao 채널 개설
+2) kakao I open builder (승인 요청 후 약 7일 소요)
+3) 성능좋은 GPU 혹은 CPU, RAM까지 갖춰져있는 고성능 PC
+4) 로컬에 모델 저장
+5) crawling.py에 모델 경로 수정
