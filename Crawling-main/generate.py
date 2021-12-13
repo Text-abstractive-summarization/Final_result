@@ -4,7 +4,7 @@ import torch
 
 class Generate:
     def __init__(self, model_url):
-        self.model = torch.load(model_url+'/model.pt')
+        self.model = T5ForConditionalGeneration.from_pretrained(model_url)
         self.tokenizer = T5Tokenizer.from_pretrained(model_url)
         self.device = device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.model.to(device)
